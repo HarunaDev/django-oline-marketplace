@@ -9,3 +9,11 @@ virtual environment is an isolated environment in your computer where you can in
 ## to activate your virtual environment (inside of your terminal type the command below)
 
 - source env/Scripts/activate
+
+## to install django (inside of your terminal type the command below)
+
+- pip install django
+
+## to create new django project (inside of your terminal type the command below)
+
+- django-admin startproject "project-name"

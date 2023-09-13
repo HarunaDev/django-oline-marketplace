@@ -35,4 +35,24 @@ virtual environment is an isolated environment in your computer where you can in
 
 ## create first view in views.py
 
-## inside of project-name/core/ create template folder and a sub folder called core, then create a new file called html
+## Inside of views.py add the following python code to create a view
+
+```python
+    def index(request):
+    return render(request, 'core/index.html')
+```
+
+## inside of project-name/core/ create template folder and a sub folder called core, then create a new file called index.html with html structure
+
+## inside of urls.py import views you just created with the code below
+
+```python
+    from core.views import index, contact
+
+    urlpatterns = [
+        path('', index, name='index'),
+        path('contact/', contact, name='contact'),
+        path('admin/', admin.site.urls),
+    ]
+
+```

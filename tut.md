@@ -152,3 +152,21 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 ```
+
+## add nav bar to app
+
+Update your base.html with the code below
+
+```html
+    <!-- add nav element inside of your body tag -->
+    <nav class="py-6 px-6 flex justify-between items-center border-b border-gray-200">
+        <a href="/" class="text-xl font-semibold">Puddle</a>
+
+        <div class="space-x-6">
+            <a href="#" class="text-lg font-semibold hover:text-gray-500">New item</a>
+            <a href="#" class="text-lg font-semibold hover:text-gray-500">Browse</a>
+
+            <a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+        </div>
+    </nav>
+```

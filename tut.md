@@ -124,5 +124,12 @@ First we need to create a new file in templates\core (contact.html) and paste th
 ```html
 {% extends 'core.base.html' %}
 
-{%  %}
+{% block title %}
+    Contact
+{% end block %}
+
+{% block content %}
+    The contact page
+{% end block %}
+
 ```

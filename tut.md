@@ -133,3 +133,22 @@ First we need to create a new file in templates\core (contact.html) and paste th
 {% end block %}
 
 ```
+
+We update your views.py with the code below to render out the contact page. 
+
+```python
+def contact(request):
+    return render(request, 'core/contact.html')    
+```
+
+Now update your urls.py with the code below
+
+```python
+from core.views import index, contact
+
+urlpatterns = [
+    path('', index, name='index'),
+    path('contact/', contact, name='contact'),
+    path('admin/', admin.site.urls),
+]
+```

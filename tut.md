@@ -199,3 +199,11 @@ Inside of your base.html file add the code below to the end of your body tag
         </div>
     </footer>
 ```
+
+## how to jump to a link or a new view in django
+
+Inside of your base.html update your contact link item with the code below
+
+```html
+<li><a href="{% url 'contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
+```

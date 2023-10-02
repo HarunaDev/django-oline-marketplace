@@ -167,6 +167,35 @@ Update your base.html with the code below
             <a href="#" class="text-lg font-semibold hover:text-gray-500">Browse</a>
 
             <a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+
+            <a href="#" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Login up</a>
         </div>
     </nav>
+```
+
+## add footer to app
+
+Inside of your base.html file add the code below to the end of your body tag
+
+```html
+    <footer class="py-6 px-6 flex justify-between bg-gray-800">
+        <div class="w-2/3 pr-10">
+            <h3 class="mb-5 font-semibold text-gray-400">About</h3>
+
+            <p class="text-lg text-gray-500">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore distinctio aspernatur dolorem, sunt explicabo quas.
+            </p>
+        </div>
+
+        <div class="w-1/3">
+            <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+
+            <ul class="space-y-2">
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">About</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Privacy</a></li>
+                <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">Terms of use</a></li>
+            </ul>
+        </div>
+    </footer>
 ```

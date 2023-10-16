@@ -207,3 +207,47 @@ Inside of your base.html update your contact link item with the code below
 ```html
 <li><a href="{% url 'contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
 ```
+
+## how to add categories and items to app
+
+
+Inside your <django app> create a new django app called items
+
+```bash
+python manage.py startapp item
+```
+
+## inside of settings.py, locate INSTALLED_APPS and add 'item' to the list
+
+## create database model
+
+Inside of `items/` add the code below to the `models.py` file
+
+```python
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+```
+Run the following commands in your command line to create categories and execute script
+
+```bash
+python manage.py makemigrations && python manage.py migrate
+```
+
+## create user in admin to be able to add items to categories
+
+```bash
+python manage.py createsuperuser
+## fill in the details
+```
+
+## runserver and visit `<django app url>/admin` to login your 
+
+## import and register models inside `item/admin.py` 
+
+```python
+# Import models
+from .models import Category
+
+# Register your models here.
+admin.site.register(Category)
+```

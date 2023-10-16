@@ -266,3 +266,24 @@ class Meta:
 def __str__(self):
     return self.name
 ```
+
+## Create items model inside of `items/models.py`
+
+Add the code snippet below to create a new class
+
+```python
+# Create items model
+class Item(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    price = models.FloatField()
+    is_sold = models.BooleanField(default=False)
+    created_by = models.ForeignKey(User, related_name='items', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+```
+
+Import `User` to get rid of error message
+
+```python
+from django.contrib.auth.models import User
+```

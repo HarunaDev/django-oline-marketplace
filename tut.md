@@ -251,3 +251,18 @@ from .models import Category
 # Register your models here.
 admin.site.register(Category)
 ```
+
+## Change name of categories in django admin dashboard
+
+Add the code snippet below to your `item/models.py`
+
+```python
+# Change the name of category
+class Meta:
+    ordering = ('name',)
+    verbose_name_plural = 'Categories'
+
+# Change name of categories created
+def __str__(self):
+    return self.name
+```

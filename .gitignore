@@ -1,2 +1,3 @@
 env
 shurp/core/_pycache_
+*__pycache__

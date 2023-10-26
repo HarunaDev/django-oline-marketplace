@@ -4,7 +4,7 @@
 
 virtual environment is an isolated environment in your computer where you can install python packages for your projects.
 
-- python3 -m venv env
+- python -m venv env
 
 ## to activate your virtual environment (inside of your terminal type the command below)
 
@@ -289,3 +289,58 @@ Import `User` to get rid of error message
 ```python
 from django.contrib.auth.models import User
 ```
+
+## create image field and foreign key for category
+
+Update your `Item` class in `item/models.py` with the code below
+
+```python
+category = models.ForeignKey(Category, related_name='items', on_delete=models.CASCADE)
+image = models.ImageField(upload_to='item_images', blank=True,  null=True)
+```
+
+## install pillow to handle images in app & get rid of error message
+
+Inside of your terminal in your django app folder run the command below
+
+```bash
+pip install pillow #command one
+python manage.py makemigrations #command two
+python manage.py migrate #command three
+```
+
+## register item category in `admin.py`
+
+Inside of `item/admin.py` update the existing code with the snippet below
+
+```python
+from .models import Category, Item
+
+admin.site.register(Item)
+```
+
+## you might need to run the server again to see changes
+
+```bash
+python manage.py runserver
+```
+
+## handle media files & folders
+
+Inside of `shurp/shurp/settings.py` add the code snippets below under `STATIC_URL = 'static/'`
+
+```python
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+```
+
+## to view the actual name on the dashboard
+
+Inside of `item/models.py` type in the code snippet below inside of the `Item` class
+
+```python
+def __str__(self):
+        return self.name
+```
+
+## show products from the database to the front page

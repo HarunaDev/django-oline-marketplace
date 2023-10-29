@@ -74,7 +74,7 @@ virtual environment is an isolated environment in your computer where you can in
 
 ```
 
-## create html template file with basic components that can be extended to other html files that will be created. 
+## create html template file with basic components that can be extended to other html files that will be created
 
 inside of templates\core create a new html file (base.html) and paste the code below
 
@@ -111,7 +111,7 @@ inside of templates\core create a new html file (base.html) and paste the code b
 {% endblock %}
 ```
 
-## Challenge 
+## Challenge
 
 Create a new contact page that extends from the base.html
 
@@ -134,7 +134,7 @@ First we need to create a new file in templates\core (contact.html) and paste th
 
 ```
 
-We update your views.py with the code below to render out the contact page. 
+We update your views.py with the code below to render out the contact page.
 
 ```python
 def contact(request):
@@ -210,8 +210,7 @@ Inside of your base.html update your contact link item with the code below
 
 ## how to add categories and items to app
 
-
-Inside your <django app> create a new django app called items
+Inside your django app create a new django app called items
 
 ```bash
 python manage.py startapp item
@@ -227,6 +226,7 @@ Inside of `items/` add the code below to the `models.py` file
 class Category(models.Model):
     name = models.CharField(max_length=255)
 ```
+
 Run the following commands in your command line to create categories and execute script
 
 ```bash
@@ -240,9 +240,9 @@ python manage.py createsuperuser
 ## fill in the details
 ```
 
-## runserver and visit `<django app url>/admin` to login your 
+## runserver and visit `<django app url>/admin` to login your
 
-## import and register models inside `item/admin.py` 
+## import and register models inside `item/admin.py`
 
 ```python
 # Import models
@@ -344,3 +344,137 @@ def __str__(self):
 ```
 
 ## show products from the database to the front page
+
+Inside of `shurp/core/views.py` update the function to request index page and import models with the code snippet below
+
+```python
+# import models
+from item.models import Category, Item
+
+def index(request):
+    #display first 6 items in db that has not been sold
+    items = Item.objects.filter(is_sold=False)[0:6]
+    categories = Category.objects.all()
+
+    # request category & items
+    return render(request, 'core/index.html', {
+        'categories': categories,
+        'items': items,
+    })
+```
+
+## edit html template to display data from database
+
+Inside `shurp/core/templates/core.index.html` update the block content with the code below
+
+```html
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class="mb-12 text-2xl text-center">Newest Items</h2>
+
+        <div class="grid grid-cols-3 gap-3">
+            {% for item in items %}
+                <div class="">
+                    <a href="#">
+                        <div class="">
+                            <img src="{{ item.image.url }}" class="rounded-t-xl" alt="">
+                        </div>
+
+                        <div class="p-6 bg-white rounded-b-xl">
+                            <h2 class="text-2xl">
+                                {{ item.name }}
+                            </h2>
+                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+```
+
+## show product images on page
+
+Inside `shurp/shurp/urls.py` update your python script with the code below
+
+```python
+# import conf files to handle images *strictly for development
+from django.conf import settings
+from django.conf.urls.static import static
+
+# update the urlpatterns list below
+urlpatterns = [
+    path('', index, name='index'),
+    path('contact/', contact, name='contact'),
+    path('about/', about, name='about'),
+    path('privacy/', privacy, name='privacy'),
+    path('terms/', terms, name='terms'),
+    path('admin/', admin.site.urls),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
+
+## show categories and items left in front page
+
+Inside of `templates/core/index.html` update the block content with the code below.
+
+```html
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class="mb-12 text-2xl text-center">Categories</h2>
+
+        <div class="grid grid-cols-3 gap-3">
+            {% for category in categories %}
+            <div class="">
+                <a href="#">
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">
+                            {{ category.name }}
+                        </h2>
+                        <p class="text-gray-500">{{ category.items.count }} items</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+```
+
+## create & show details page
+
+Inside of `shurp/item` create a new folder `templates`, cd into `templates/` and create a new folder `item`
+
+Change directory into `item/` and create `detail.html` and paste the code below
+
+```html
+{% extends 'core/base.html' %}
+
+{% block title %}
+{{ item.name }}
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3">
+        <img src="{{ item.image.url }}" alt="" class="rounded-xl">
+    </div>
+
+    <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
+        <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p>
+        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by }}</p>
+        <p class="text-gray-500"><strong>Description: </strong>{{ item.description }}</p>
+    </div>
+</div>
+{% endblock %}
+```
+
+## update urls config for details page
+
+Inside of `shurp/urls.py` update your python script with the code below
+
+```python
+# import libraries needed
+from django.urls import path, include
+
+# update the urlpatterns list with the code below
+path('items/', include('item.urls')),
+```

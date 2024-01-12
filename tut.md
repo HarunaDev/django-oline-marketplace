@@ -562,3 +562,36 @@ Inside of `shurp/item/templates/item/detail.html` update the template with the c
     </div>
 </div>
 ```
+
+## Signing Up
+
+## Create new `urls.py` file to handle user sign-up
+
+Inside of `shurp/core` create a new `urls.py` file and paste the code below to handle url configurations
+
+```python
+# urls.py file to handle signing up
+
+# import neccessary modules
+from django.urls import path
+from . import views
+
+app_name = 'core'
+
+urlpatterns = [
+    path('', views.index, name="index"),
+    path('contact/', views.contact, name='contact')
+]
+```
+
+## Update the urls config file in `shurp/shurp/`
+
+Inside of `shurp/shurp/urls.py` update the code there with the snippet below change the line that is importing views module and the first item in the `url` patterns list. 
+
+```python
+from core.views import about, privacy, terms
+
+urlpatterns = [
+    path('', include('core.urls'))
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```

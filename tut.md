@@ -440,6 +440,21 @@ Inside of `templates/core/index.html` update the block content with the code bel
 
 ## create & show details page
 
+Inside of `shurp/item/views.py` add the following code to direct the user to the `details.html` or a `404` page if the item does not exist
+
+```python
+from django.shortcuts import render, get_object_or_404
+from .models import Item
+
+# Create your views here.
+def detail(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+
+    return render(request, 'item/detail.html', {
+        'item': item
+    })
+```
+
 Inside of `shurp/item` create a new folder `templates`, cd into `templates/` and create a new folder `item`
 
 Change directory into `item/` and create `detail.html` and paste the code below
@@ -460,11 +475,32 @@ Change directory into `item/` and create `detail.html` and paste the code below
     <div class="col-span-2 p-6 bg-gray-100 rounded-xl">
         <h1 class="mb-6 text-3xl">{{ item.name }}</h1>
         <p class="text-gray-500"><strong>Price: </strong>{{ item.price }}</p>
-        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by }}</p>
-        <p class="text-gray-500"><strong>Description: </strong>{{ item.description }}</p>
+        <p class="text-gray-500"><strong>Seller: </strong>{{ item.created_by.username }}</p>
+        
+        {% if item.description %}
+            <p class="text-gray-700"><strong class="text-gray-500">Description: </strong>{{ item.description }}</p>
+        {% endif %}
+
+        <a href="#" class="inline-block mt-6 px-3 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Contact seller</a>
     </div>
 </div>
 {% endblock %}
+```
+
+## create urls file in `item` folder
+
+Inside of `shurp/item` create a new file called `urls.py` to handle urls and paste the code below
+
+```python
+from django.urls import path
+
+from . import views
+
+app_name = 'item'
+
+urlpatterns = [
+    path('<int:pk>/', views.detail, name='detail'),
+]
 ```
 
 ## update urls config for details page
@@ -477,4 +513,23 @@ from django.urls import path, include
 
 # update the urlpatterns list with the code below
 path('items/', include('item.urls')),
+```
+
+## update your index file to point to the detail url page
+
+Inside of `core/templates/core/index.html` update the value of the `href` attribute to point to this path "{% url 'item:detail' item.id %}"
+
+## update views to display related items in details page
+
+Inside of `shurp/item/views.py` update the details render function with the code below
+
+```python
+def detail(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(pk=pk)[0:3] #include related items in views
+
+    return render(request, 'item/detail.html', {
+        'item': item,
+        'related_items': related_items #append related items
+    })
 ```

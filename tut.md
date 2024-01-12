@@ -533,3 +533,32 @@ def detail(request, pk):
         'related_items': related_items #append related items
     })
 ```
+
+## update details template to render related items
+
+Inside of `shurp/item/templates/item/detail.html` update the template with the code below to show related items
+
+```html
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Related Items</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for item in related_items %}
+            <div class="">
+                <a href="{% url 'item:detail' item.id %}">
+                    <div class="">
+                        <img src="{{ item.image.url }}" class="rounded-t-xl" alt="">
+                    </div>
+
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">
+                            {{ item.name }}
+                        </h2>
+                        <p class="text-gray-500">Price: {{ item.price }}</p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+```

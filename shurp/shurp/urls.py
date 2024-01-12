@@ -17,16 +17,14 @@ Including another URLconf
 # handle image *strictly for development
 from django.conf import settings
 from django.conf.urls.static import static
-
 from django.contrib import admin
 from django.urls import path, include
-
-from core.views import index, contact, about, privacy, terms
+from core.views import about, privacy, terms
 
 urlpatterns = [
-    path('', index, name='index'),
+    path('', include('core.urls')),
     path('items/', include('item.urls')),
-    path('contact/', contact, name='contact'),
+    # path('contact/', contact, name='contact'),
     path('about/', about, name='about'),
     path('privacy/', privacy, name='privacy'),
     path('terms/', terms, name='terms'),

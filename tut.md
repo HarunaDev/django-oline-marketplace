@@ -603,3 +603,24 @@ Inside of `shurp/core/templates/core/base.html` update the contact url at the fo
 ```html
 <li><a href="{% url 'core:contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
 ```
+
+## Create `forms.py` file to handle sign-up and login validation.
+
+Inside `shurp/core/` create a new file `forms.py` and paste the code snippet below.
+
+```python
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+```
+
+## Create models for users and fields that they are required to fill
+
+Below the import statements in the `forms.py` files paste the code below
+
+```python
+class SignupForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+```

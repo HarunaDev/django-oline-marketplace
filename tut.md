@@ -595,3 +595,11 @@ urlpatterns = [
     path('', include('core.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 ```
+
+#### Bug 🐛
+
+Inside of `shurp/core/templates/core/base.html` update the contact url at the footer with the code below
+
+```html
+<li><a href="{% url 'core:contact' %}" class="text-lg text-teal-500 hover:text-teal-700">Contact</a></li>
+```

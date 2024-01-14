@@ -624,3 +624,40 @@ class SignupForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1", "password2")
 ```
+
+## Update views to display signup form
+
+Inside of `shurp/core/views.py` update your code with the snippet below
+
+```python
+# create view for signup form
+from .forms import SignupForm
+
+def signup(request):
+    form = SignupForm()
+
+    return render(request, 'core/signup.html', {
+        'form': form
+    })
+```
+
+## Create `signup.html` template to display form
+
+Inside of `shurp/core/templates/core` create `signup.html` and paste the code snippet below
+
+```html
+{% extends 'core/base.html' %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block content %}
+<div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
+    <h1 class="mb-6 text-3xl">Sign Up</h1>
+
+</div>
+{% endblock %}
+```
+
+## Update `urls.py` to direct users to signup page
+
+Inside of `shurp/core/urls.py` update the `urlpattern` list with this line of code `path('signup/', views.signup, name="signup")`

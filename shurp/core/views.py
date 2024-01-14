@@ -3,6 +3,9 @@ from django.shortcuts import render
 # import models
 from item.models import Category, Item
 
+# create view for signup form
+from .forms import SignupForm
+
 # Create your views here.
 def index(request):
     #display first 6 items in db that has not been sold
@@ -26,3 +29,10 @@ def terms(request):
 
 def privacy(request):
     return render(request, 'core/privacy.html')
+
+def signup(request):
+    form = SignupForm()
+
+    return render(request, 'core/signup.html', {
+        'form': form
+    })

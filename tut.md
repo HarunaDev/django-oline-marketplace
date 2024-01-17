@@ -711,3 +711,29 @@ Inside of `shurp/core/templates/core/signup.html` update the form section with t
         <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
     </form>
 ```
+
+## Create styles for form in `forms.py`
+
+Inside of `shurp/core/forms.py` update the `SignupForm` class with the code below
+
+```python
+username = forms.CharField(widget=forms.TextInput(attrs={
+    'placeholder': 'Your username',
+    'class': 'w-full py-4 px-6 rounded-xl'
+}))
+
+email = forms.CharField(widget=forms.EmailInput(attrs={
+    'placeholder': 'Your email address',
+    'class': 'w-full py-4 px-6 rounded-xl'
+}))
+
+password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+    'placeholder': 'Your password',
+    'class': 'w-full py-4 px-6 rounded-xl'
+}))
+
+password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+    'placeholder': 'Repeat password',
+    'class': 'w-full py-4 px-6 rounded-xl'
+}))
+```

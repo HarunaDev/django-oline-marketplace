@@ -654,6 +654,13 @@ Inside of `shurp/core/templates/core` create `signup.html` and paste the code sn
 <div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
     <h1 class="mb-6 text-3xl">Sign Up</h1>
 
+    <!-- add form -->
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+
 </div>
 {% endblock %}
 ```
@@ -661,3 +668,46 @@ Inside of `shurp/core/templates/core` create `signup.html` and paste the code sn
 ## Update `urls.py` to direct users to signup page
 
 Inside of `shurp/core/urls.py` update the `urlpattern` list with this line of code `path('signup/', views.signup, name="signup")`
+
+## Update `signup.html` with form fields
+
+Inside of `shurp/core/templates/core/signup.html` update the form section with the code below
+
+```html
+<!-- add form -->
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Username</label> <br>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">E-mail</label> <br>
+            {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Enter Password</label> <br>
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Enter Password again</label> <br>
+            {{ form.password2 }}
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                {{ form.non_field_errors }} <!-- errors not connected to form field -->
+            </div>
+        {% endif %}
+
+        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+```

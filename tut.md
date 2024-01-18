@@ -737,3 +737,22 @@ password2 = forms.CharField(widget=forms.PasswordInput(attrs={
     'class': 'w-full py-4 px-6 rounded-xl'
 }))
 ```
+
+## Validate user authentication and redirect to login
+
+Inside of `shurp/core/views.py` update the code to validate user auth and redirect user to login page
+
+```python
+# validate form before creating user
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login')
+    else:
+        form = SignupForm()
+```
+
+Also import `redirect` at the top of your script

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # import models
 from item.models import Category, Item
@@ -31,7 +31,16 @@ def privacy(request):
     return render(request, 'core/privacy.html')
 
 def signup(request):
-    form = SignupForm()
+    # validate form before creating user
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login')
+    else:
+        form = SignupForm()
 
     return render(request, 'core/signup.html', {
         'form': form

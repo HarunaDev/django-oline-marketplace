@@ -756,3 +756,42 @@ Inside of `shurp/core/views.py` update the code to validate user auth and redire
 ```
 
 Also import `redirect` at the top of your script
+
+## Create a template for login page
+
+Inside of `shurp/core/templates/core/` create a `login.html` file and extend some elements
+
+```html
+{% extends 'core/base.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block content %}
+    <h1>The Login page..</h1>
+{% endblock %}
+```
+
+## Update `views.py` to render login template
+
+Inside of `shurp/core/views.py` add the block of code below
+
+```python
+def login(request):
+    return render(request, 'core/login.html')
+```
+
+## Update URL patterns list
+
+Inside of `shurp/core/urls.py` update the url patterns list with the code below
+
+```python
+urlpatterns = [
+    path('', views.index, name="index"),
+    path('contact/', views.contact, name='contact'),
+    path('signup/', views.signup, name="signup"),
+    path('login/', views.login, name="login")
+]
+```
+

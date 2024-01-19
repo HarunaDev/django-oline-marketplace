@@ -848,3 +848,59 @@ urlpatterns = [
 
 Inside of `shurp/core/templates/core/base.html` update the `href` value of the login link with this value `{% url 'core:login' %}`
 
+## update url pattern to display login template
+
+Inside of `shurp/core/urls.py` update the url patterns with the code below
+
+```python
+urlpatterns = [
+    path('', views.index, name="index"),
+    path('contact/', views.contact, name='contact'),
+    path('signup/', views.signup, name="signup"),
+    path('login/', auth_views.LoginView.as_view(template_name='core/login.html', authentication_form=LoginForm), name='login')
+]
+```
+
+## update login template
+
+Inside of `shurp/core/templates/core/login.html` update the template page with the code below
+
+```html
+{% extends 'core/base.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
+    <h1 class="mb-6 text-3xl">Login</h1>
+
+    <!-- add form -->
+    <form method="post" action=".">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Username</label> <br>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="inline-block mb-2">Enter Password</label> <br>
+            {{ form.password }}
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div class="mb-3 p-6 bg-red-100 rounded-xl">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                {{ form.non_field_errors }} <!-- errors not connected to form field -->
+            </div>
+        {% endif %}
+
+        <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+    </form>
+
+</div>
+{% endblock %}
+```

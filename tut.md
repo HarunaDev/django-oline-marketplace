@@ -821,5 +821,30 @@ Don't forget to include `AuthenticationForm` among your imports atthe top of the
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 ```
 
+## Update url patterns to direct users to django login form
 
+Inside of `shurp/core/urls.py` update your code with the snippet below
+
+```python
+# urls.py file to handle signing up
+from django.contrib.auth import views as auth_views
+
+# import neccessary modules
+from django.urls import path
+from . import views
+from .forms import LoginForm
+
+app_name = 'core'
+
+urlpatterns = [
+    path('', views.index, name="index"),
+    path('contact/', views.contact, name='contact'),
+    path('signup/', views.signup, name="signup"),
+    path('login/', auth_views.LoginView.as_view(authentication_form=LoginForm), name='login')
+]
+```
+
+## update login button link in `base.html`
+
+Inside of `shurp/core/templates/core/base.html` update the `href` value of the login link with this value `{% url 'core:login' %}`
 

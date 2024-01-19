@@ -795,3 +795,31 @@ urlpatterns = [
 ]
 ```
 
+## vyond for video editing
+
+## Create Login class to handle User login
+
+Inside of `shurp/core/forms.py` create a login class that takes username and password
+
+```python
+# create login form class
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Your username',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
+
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Your password',
+        'class': 'w-full py-4 px-6 rounded-xl'
+    }))
+```
+
+Don't forget to include `AuthenticationForm` among your imports atthe top of the script
+
+```python
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+```
+
+
+

@@ -13,7 +13,7 @@ class LoginForm(AuthenticationForm):
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Your password',
         'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    }))    
 
 # create models for user and and fields they should fill in the form
 class SignupForm(UserCreationForm):

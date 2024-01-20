@@ -939,3 +939,34 @@ Inside of `shurp/core/templates/core/base.html` update the navbar section with t
 <a href="#" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Message</a>
 
 ```
+
+## Create form to handle adding items
+
+Inside of `shurp/item` create a `forms.py` file and paste the code below
+
+```python
+# create form to handle adding items
+from django import forms
+
+from .models import Item
+
+class NewItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ('category', 'name', 'description', 'price', 'image')
+```
+
+## create views to render form
+
+Inside of `shurp/item/views.py` update the code with the snippet below
+
+```python
+#create views for the new form
+@login_required
+def new(request):
+    form = NewItemForm()
+
+    return render(request, 'item/form.html', {
+        'form': form
+    })
+```

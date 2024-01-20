@@ -928,3 +928,14 @@ Inside of `shurp/core/templates/core/base.html` update the code that displays th
                 <a href="{% url 'core:login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Login up</a>
             {% endif %}
 ```
+
+## Add dashboard and message buttons in navbar
+
+Inside of `shurp/core/templates/core/base.html` update the navbar section with the code below
+
+```html
+<a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Dashboard</a>
+
+<a href="#" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Message</a>
+
+```

@@ -904,3 +904,27 @@ Inside of `shurp/core/templates/core/login.html` update the template page with t
 </div>
 {% endblock %}
 ```
+
+## Create login redirect routes for logged out users and users who login
+
+Inside of `shurp/shurp/settings.py` paste the code below
+
+```python
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+```
+
+## Update `base.html` to hide buttons when a user is logged in
+
+Inside of `shurp/core/templates/core/base.html` update the code that displays the signup and login buttons with the code below
+
+```html
+<!-- show buttons if user is signed in -->
+            {% if request.user.is_authenticated %}
+            {% else %}
+                <a href="{% url 'core:signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign up</a>
+
+                <a href="{% url 'core:login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Login up</a>
+            {% endif %}
+```

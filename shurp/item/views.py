@@ -14,14 +14,11 @@ def detail(request, pk):
         'related_items': related_items #append related items
     })
 
-#create views for the new form
-from django.contrib.auth.decorators import login_required
-from .forms import NewItemForm
-
 @login_required
 def new(request):
     form = NewItemForm()
 
     return render(request, 'item/form.html', {
-        'form': form
+        'form': form,
+        'title': 'New Item',
     })

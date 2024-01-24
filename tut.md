@@ -961,12 +961,71 @@ class NewItemForm(forms.ModelForm):
 Inside of `shurp/item/views.py` update the code with the snippet below
 
 ```python
+from django.contrib.auth.decorators import login_required
+from .forms import NewItemForm
+
 #create views for the new form
 @login_required
 def new(request):
     form = NewItemForm()
 
     return render(request, 'item/form.html', {
-        'form': form
+        'form': form,
+        'title': 'New Item',
     })
+```
+
+## Update url patterns in `urls.py`
+
+Inside of `shurp/item/urls.py` update the url patterns with the code snippet below
+
+```python
+urlpatterns = [
+    path('new/', views.new, name='new'),
+    path('<int:pk>/', views.detail, name='detail'),
+]
+```
+
+## Create newItem form template 
+
+Inside of `shurp/item/templates/item` create a new file `form.html` and paste the code snippet below
+
+```html
+{% extends 'core/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-6 text-3xl">{{ title }}</h1>
+
+<form action="." method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="space-y-4">
+        {{ form.as_p }}
+    </div>
+
+    {% if form.errors or form.non_field_errors %}
+        <div class="mb-3 p-6 bg-red-100 rounded-xl">
+            {% for field in form %}
+                {{ field.errors }}
+            {% endfor %}
+
+            {{ form.non_field_errors }} 
+        </div>
+    {% endif %}
+
+    <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+</form>
+{% endblock %}
+```
+
+## Update New Item link in `base.html` 
+
+Inside of `shurp/core/templates/core/base.html` locate the New Item link and update the value of the href attribute with the snippet below
+
+```html
+href="{% url 'item:new' %}"
 ```

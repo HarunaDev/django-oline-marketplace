@@ -36,8 +36,6 @@ Below are step-by-step guides on how to solve this problem.
 
 The commands above will create and activate a virtual environment on your machine. The virtual environment will store all the required dependencies that your project needs.
 
-
-
 4. Install Python packages needed for project
 
 ```bash

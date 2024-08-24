@@ -24,7 +24,7 @@ from core.views import about, privacy, terms
 urlpatterns = [
     path('', include('core.urls')),
     path('items/', include('item.urls')),
-    # path('contact/', contact, name='contact'),
+    path('dashboard/', include('dashboard.urls')),
     path('about/', about, name='about'),
     path('privacy/', privacy, name='privacy'),
     path('terms/', terms, name='terms'),

@@ -9,6 +9,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
+        # order categories by name & replace django default category
         ordering = ('name',) #bug was a typo 🤣 
         verbose_name_plural = 'Categories'
     

@@ -8,6 +8,7 @@
 
     <!-- add form -->
     <form method="post" action=".">
+        <!-- security provided by django to prevent cross site request forgery -->
         {% csrf_token %}
 
         <div class="mb-3">

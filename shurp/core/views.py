@@ -10,7 +10,7 @@ from .forms import SignupForm
 def index(request):
     #display first 6 items in db that has not been sold
     items = Item.objects.filter(is_sold=False)[0:6]
-    categories = Category.objects.all()
+    categories = Category.objects.all() #get all categories
 
     # request category & items
     return render(request, 'core/index.html', {

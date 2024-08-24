@@ -3,7 +3,7 @@ from django import forms
 
 from .models import Item
 
-INPUT_CLASSES = ""
+INPUT_CLASSES = "w-full py-4 px-6 rounded-xl border"
 
 # form to allow users add items
 class NewItemForm(forms.ModelForm):

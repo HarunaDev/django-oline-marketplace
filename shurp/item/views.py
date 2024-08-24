@@ -1,6 +1,6 @@
 # use django decorators to ensure user is logged in
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewItemForm
 from .models import Item
 
@@ -19,7 +19,18 @@ def detail(request, pk):
 # check if user is logged in before granting access to add new item
 @login_required
 def new(request):
-    form = NewItemForm()
+    # check if method is post then get and validate files before saving to database
+    if request.method == 'POST':
+        form = NewItemForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            item = form.save(commit=False) #save files in object before storing in database
+            item.created_by = request.user # get the created by data and save to user before saving the files to database
+            item.save()
+
+            return redirect('item:detail', pk=item.id)
+    else: #else if it is a get request, we just render the new item form
+        form = NewItemForm()
 
     return render(request, 'item/form.html', {
         'form': form,

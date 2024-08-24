@@ -2,3 +2,5 @@ env
 shurp/core/_pycache_
 *__pycache__
 shurp/db.sqlite3
+media/
+.gitignore

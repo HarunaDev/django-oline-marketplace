@@ -36,3 +36,12 @@ def new(request):
         'form': form,
         'title': 'New Item',
     })
+
+# delete item view
+@login_required
+def delete(request, pk):
+    # get items created by the authenticated user before deleting
+    item = get_object_or_404(Item, pk=pk, created_by=request.user)
+    item.delete()
+
+    redirect('dashboard/index.html')

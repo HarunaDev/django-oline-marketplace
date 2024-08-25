@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from item.models import Item
 
 # Create your views here.
-
+# dashboard index view
 @login_required
 def index(request):
     # get all items user have created
@@ -12,3 +12,5 @@ def index(request):
     return render(request, 'dashboard/index.html', {
         'items': items,
     })
+
+

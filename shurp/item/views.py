@@ -5,6 +5,14 @@ from .forms import NewItemForm, EditItemForm
 from .models import Item
 
 # Create your views here.
+# create view for browse
+def browse(request):
+    items = Item.objects.filter(is_sold=False)
+
+    return render(request, 'item/items.html', {
+        'items': items
+    })
+
 # create view for each detail of an item
 def detail(request, pk):
     # get detail of item from database and also related items from the same category

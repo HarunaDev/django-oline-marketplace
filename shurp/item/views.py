@@ -1,7 +1,7 @@
 # use django decorators to ensure user is logged in
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import NewItemForm
+from .forms import NewItemForm, EditItemForm
 from .models import Item
 
 # Create your views here.
@@ -35,6 +35,26 @@ def new(request):
     return render(request, 'item/form.html', {
         'form': form,
         'title': 'New Item',
+    })
+
+# check if user is logged in before granting access to edit item
+@login_required
+def edit(request, pk):
+    item = get_object_or_404(Item, pk=pk, created_by=request.user)
+    # check if method is post then get and validate files before saving to database
+    if request.method == 'POST':
+        form = EditItemForm(request.POST, request.FILES, instance=item)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('item:detail', pk=item.id)
+    else: #else if it is a get request, we just render the new item form
+        form = EditItemForm(instance=item)
+
+    return render(request, 'item/form.html', {
+        'form': form,
+        'title': 'Edit Item',
     })
 
 # delete item view

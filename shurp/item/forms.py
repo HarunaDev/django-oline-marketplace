@@ -29,4 +29,26 @@ class NewItemForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
         }
+
+# form to allow users edit items
+class EditItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ('name', 'description', 'price', 'image', 'is_sold')
+
+        # style for new item fields
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'description': forms.Textarea(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'price': forms.TextInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+            'image': forms.FileInput(attrs={
+                'class': INPUT_CLASSES
+            }),
+        }
         

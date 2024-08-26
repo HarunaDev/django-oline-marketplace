@@ -6,11 +6,18 @@ from .models import Item
 
 # Create your views here.
 # create view for browse
-def browse(request):
+def items(request):
+    # get query and pass it to frontend
+    query = request.GET.get('query', '')
     items = Item.objects.filter(is_sold=False)
 
+    # check if query is filled and if it is in items
+    if query:
+        items = items.filter(name__icontains=query)
+
     return render(request, 'item/items.html', {
-        'items': items
+        'items': items,
+        'query': query,
     })
 
 # create view for each detail of an item

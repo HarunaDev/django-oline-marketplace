@@ -12,6 +12,7 @@ def items(request):
     query = request.GET.get('query', '')
     items = Item.objects.filter(is_sold=False)
     categories = Category.objects.all()
+    category_id = request.GET.get('category', 0) #get category id
 
     # check if query is filled and if it is in items
     if query:
@@ -21,6 +22,7 @@ def items(request):
         'items': items,
         'query': query,
         'categories': categories,
+        'category_id': int(category_id) #converted data type to fix bug
     })
 
 # create view for each detail of an item

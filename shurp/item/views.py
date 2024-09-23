@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewItemForm, EditItemForm
 from .models import Item
+from django.db.models import Q
 
 # Create your views here.
 # create view for browse
@@ -13,7 +14,7 @@ def items(request):
 
     # check if query is filled and if it is in items
     if query:
-        items = items.filter(name__icontains=query)
+        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
     return render(request, 'item/items.html', {
         'items': items,

@@ -2,7 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NewItemForm, EditItemForm
-from .models import Item
+from .models import Item, Category
 from django.db.models import Q
 
 # Create your views here.
@@ -11,6 +11,7 @@ def items(request):
     # get query and pass it to frontend
     query = request.GET.get('query', '')
     items = Item.objects.filter(is_sold=False)
+    categories = Category.objects.all()
 
     # check if query is filled and if it is in items
     if query:
@@ -19,6 +20,7 @@ def items(request):
     return render(request, 'item/items.html', {
         'items': items,
         'query': query,
+        'categories': categories,
     })
 
 # create view for each detail of an item

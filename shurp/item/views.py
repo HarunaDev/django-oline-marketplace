@@ -14,6 +14,10 @@ def items(request):
     categories = Category.objects.all()
     category_id = request.GET.get('category', 0) #get category id
 
+    # check if for queried category and return the items in the category selected
+    if category_id:
+        items = items.filter(category_id=category_id)
+
     # check if query is filled and if it is in items
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))

@@ -4,3 +4,4 @@ shurp/core/_pycache_
 shurp/db.sqlite3
 media/
 .gitignore
+0001_initial.py

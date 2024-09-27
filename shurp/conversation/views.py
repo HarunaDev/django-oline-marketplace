@@ -5,7 +5,6 @@ from .forms import ConversationMessageForm
 from .models import Conversation
 
 @login_required
-# new conversation view
 def new_conversation(request, item_pk):
     item = get_object_or_404(Item, pk=item_pk)
 
@@ -18,7 +17,10 @@ def new_conversation(request, item_pk):
 
     if conversations:
         # Redirect to the first existing conversation
-        return redirect('conversation:detail', pk=conversations.first().pk)
+        return redirect('conversation:detail', pk=conversations.first().id)
+
+    # Initialize form before handling the request type
+    form = ConversationMessageForm()
 
     # If the request method is POST, handle form submission
     if request.method == 'POST':
@@ -39,8 +41,6 @@ def new_conversation(request, item_pk):
 
             # Redirect to the item detail page after the conversation is created
             return redirect('item:detail', pk=item_pk)
-    else:
-        form = ConversationMessageForm()
 
     # Render the conversation form if the request method is GET or the form is invalid
     return render(request, 'conversation/new.html', {
